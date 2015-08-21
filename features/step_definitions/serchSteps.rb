@@ -1,7 +1,7 @@
 前提(/^"([^"]*)"を表示する$/) do |url|
 
 $agent = Mechanize.new
-$agent.user_agent_alias = 'Windows IE 9'
+$agent.user_agent_alias = 'Windows Mozilla'
    
 $page = $agent.get(url)
 end
@@ -20,8 +20,11 @@ puts 'TITLE:' +  $page2.root.title
 end
 
 ならば(/^"([^"]*)"クラスのテキストを表示する$/) do |topicText|
- File.open('/usr/local/log/mail.txt','a') do |file|
+File.open('/usr/local/log/mail.txt','a') do |file|
   file.write $page2.root.search('.'+topicText).text
  file.close
 end
+#puts $page2.root
+puts image=$page2.images_with(:dom_class => 'gunosy-app-icon')[0].url
+$agent.get(image).save("/usr/local/log/image.png")
 end
