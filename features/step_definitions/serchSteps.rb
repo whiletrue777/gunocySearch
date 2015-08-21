@@ -16,10 +16,12 @@ $page2 = $agent.get($topicLinks[0].click)
 end
 
 ならば(/^遷移したURLがリンクのそれと同じである$/) do
-puts "TITLE"+$page2.root.title
+puts 'TITLE:' +  $page2.root.title
 end
 
 ならば(/^"([^"]*)"クラスのテキストを表示する$/) do |topicText|
-puts "TOPIC" +$page2.root.search('.'+topicText).text
-
+ File.open('/usr/local/log/mail.txt','a') do |file|
+  file.write $page2.root.search('.'+topicText).text
+ file.close
+end
 end
